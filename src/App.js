@@ -16,17 +16,32 @@ function App() {
   return pokemon.sprites ? (
     <div className="container">
       <div className="row">
-        <div className="col-5"></div>
-        <div className="col-2">
-          {" "}
-          <img src={pokemon.sprites.front_default} />{" "}
+        <div className="col-3"></div>
+        <div
+          style={{
+            backgroundImage: "url(/pokedex.jpg)",
+            backgroundSize: "cover",
+            width: '370px',
+            height: '300px'
+          }}
+          class="col-2"
+        >
+          <img
+            style={{
+              width: '200px',
+              height: '200px',
+              marginTop: '60px',
+              marginLeft: '-10px'
+            }}
+            src={pokemon.sprites.front_default}
+          />
         </div>
-      </div>      
+      </div>
     </div>
   ) : (
     <div>
       {" "}
-      <button onClick={Carregar}>Carregar</button>{" "}
+      <button onClick={Carregar}>Carregar</button>
     </div>
   );
 }
