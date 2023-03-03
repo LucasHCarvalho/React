@@ -1,7 +1,11 @@
 import "./App.css";
+import Pokemon from "./Components/pokemon";
 import React from "react";
+import { BsArrowRightCircleFill, BsArrowLeftCircleFill} from 'react-icons/bs';
 
-let i = 1005;
+
+
+let i = 1;
 let tamanho = 1010;
 
 function App() {
@@ -27,7 +31,6 @@ function App() {
     Carregar()
   }
 
-
   function Carregar() {
     fetch("https://pokeapi.co/api/v2/pokemon/" + i)
       .then((response) => response.json())
@@ -49,29 +52,33 @@ function App() {
             width: '535px',
             height: '400px'
           }}
-          class="col-4"
+          className="col-4"
         >
-          <img
-            style={{
-              width: '200px',
-              height: '200px',
-              marginTop: '100px',
-              marginLeft: '10px'
-            }}
-            src={pokemon.sprites.front_default}
-          />
-           <button
-                onClick={Anterior}
-                type="button"
-                className="btn btn-primary">Anterior
-            </button>
-            <button
-                onClick={Proximo}
-                type="button"
-                className="btn btn-primary">Proximo
-            </button>
-            <h1>{i}</h1>
+          <div >
+            <Pokemon 
+             asset={pokemon.sprites.front_default}>
+            </Pokemon>
+          </div>        
         </div>
+        <div className="row">
+            <div className="col-7"></div>
+            <div className="col-2"
+               style={{
+                marginTop: '-80px'
+              }}
+            >
+                <BsArrowLeftCircleFill 
+                      onClick={Anterior}
+                      type="button"
+                      className="btn left">Anterior
+                  </BsArrowLeftCircleFill>
+                  <BsArrowRightCircleFill
+                      onClick={Proximo}
+                      type="button"
+                      className="btn right">Proximo
+                </BsArrowRightCircleFill>
+          </div>  
+        </div> 
       </div>
     </div>
   ) : (
