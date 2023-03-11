@@ -1,99 +1,45 @@
-import "./App.css";
-import Pokemon from "./Components/pokemon";
-import Pokeinfo from "./Components/pokeinfo";
-import React from "react";
-import { BsArrowRightCircleFill, BsArrowLeftCircleFill} from 'react-icons/bs';
-
-let i = 1;
-let tamanho = 1010;
+import './App.css';
+import React from 'react';
 
 function App() {
-  const [pokemon, setPokemon] = React.useState({});
-
-  function Proximo() {
-    if(i > tamanho){
-      i = 1;
+  const [login, setLogin] = React.useState();
+  const [senha, setSenha] = React.useState();
+  const [logar, setLogar] = React.useState();
+  
+  function Logar(){
+    if(login == 'lucas' && senha == 'admin'){
+      setLogar(true);
     }
     else{
-      i += 1;
+      alert("Usuario Inválido");
     }
-    Carregar()
+  }
+  function Deslogar(){
+    setLogar(false);
+    setSenha();
   }
 
-  function Anterior() {
-    if(i < 0){
-      i = tamanho;
-    }
-    else{
-      i -= 1;
-    }
-    Carregar()
-  }
-
-  function Carregar() {
-    fetch("https://pokeapi.co/api/v2/pokemon/" + i)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setPokemon(data);
-      });
-  }
-
-
-  return pokemon.sprites ? (
-    <div className="container">
-      <div className="row">
-        <div className="col-6"></div>
-        <div
-          style={{
-            backgroundImage: "url(/pokedex.jpg)",
-            backgroundSize: "cover",
-            marginLeft: '280px',
-            width: '935px',
-            height: '700px'
-          }}
-          className="col-6"
-        >
-          <div>
-            <Pokemon 
-              asset={pokemon.sprites.front_default}
-              name={pokemon.id + ' - ' + pokemon.name}>
-            </Pokemon>
-            <div 
-              style={{
-                marginLeft: '500px',
-                marginTop: '-330px',
-                textAlign: 'center'
-              }}
-            >
-              <Pokeinfo
-                abilits={pokemon.abilities.map((ability) => ability.ability.name).join(', ')}
-                types={pokemon.types.map((type) => type.type.name).join(', ')}
-                body={'height: ' + pokemon.height + 'm weight: ' + pokemon.weight + 'kg'}
-                stats={pokemon.stats.map((st, i) => {
-                  if (i < 3)
-                    return (<span>{st.stat.name}: {st.base_stat} </span>);
-                })}>              
-              </Pokeinfo>
-              
-              <BsArrowLeftCircleFill 
-                      onClick={Anterior}
-                      type="button"
-                      className="btn left">Anterior
-                  </BsArrowLeftCircleFill>
-                  <BsArrowRightCircleFill
-                      onClick={Proximo}
-                      type="button"
-                      className="btn right">Proximo
-                </BsArrowRightCircleFill>
-              </div>
-          </div>        
-        </div>
+  return (
+    !logar?
+    <div className="d-flex justify-content-center align-items-center w-100 h-100" 
+          style={{backgroundImage: "url(/images/montain.jpg)"}}>
+        <div style={{width:"400px",
+                    height:"600px"}}
+                    className='d-flex justify-content-center align-items-center flex-column'>
+          <p>Login</p>
+          <div><input type="text" onChange={(e) => setLogin(e.target.value)}/></div>
+          <p style={{marginTop: "20px"}}>Senha</p>
+          <div ><input type="text" onChange={(e) => setSenha(e.target.value)}/></div>
+          <button class="btn btn-secondary" style={{marginTop: "20px"}} onClick={Logar}>Logar</button>  
+          <p>{logar}</p>
       </div>
     </div>
-  ) : (
+    :
     <div>
-      <button onClick={Carregar}>Carregar</button>
+      <div className="d-flex justify-content-center align-items-center w-100 h-100 flex-column">
+        <p>{login}</p>
+        <button class="btn btn-secondary" onClick={Deslogar}>Deslogar</button>
+      </div>
     </div>
   );
 }
